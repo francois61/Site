@@ -1,0 +1,40 @@
+<html><head>
+<script language="JavaScript">
+
+//This file is called, when the user saves an annotation.
+//The following JavaScript function reads the MoveCount and the Annotation from the URL
+//and assignes the values to the form elements
+//Instead of using the JavaScript function, you can change the file type to
+//*.asp or *.php and read the values with ASP or PHP and  write them into a
+//database and after that directly into the form elements.
+//You further need some userid and gameid when you save the annotation in a database. 
+//Instead of using pgnannotator.html?pgnfile.txt&SetAnnotation=annotation.html&ParsePgn=2
+//you should use something like
+//pgnannotator.html?game.php%3Fgameid%3D123%26userid=456&SetAnnotation=annotation.php%3Fgameid%3D123%26userid=456
+//This will open game.php?gameid=123&userid=456 and annotation.php?gameid=123&userid=456
+//Note that the "?" "=" and "&" are escaped, so that the parameters are passed to the files
+//game.php and annotation.php and not to the file pgnannotator.html
+//The file game.php should generate a html file similar to that
+//which appeares in the right frame after a pgn file is parsed.
+
+function EvalUrlString()
+{ var ii, jj, aa, uurl = window.location.search;
+  if (uurl != "")
+  { uurl = uurl.substring(1, uurl.length);
+    var llist = uurl.split("&");
+    for (ii=0; ii<llist.length; ii++)
+    { tt = llist[ii].split("=");
+      aa=tt[1];
+      for (jj=2; jj<tt.length; jj++) aa+="="+tt[jj];
+      if (tt[0]=="MoveCount") window.document.forms[0].MoveCount.value=aa;
+      if (tt[0]=="Annotation") window.document.forms[0].Annotation.value=unescape(aa);
+    }
+  }
+}
+</script>
+</head><body onload="EvalUrlString()"><form>
+<input type='hidden' name='MoveCount'>
+<textarea rows=8 style='width:100%' name='Annotation'>
+</textarea>
+<input type='button' value='Save Annotation' onclick='parent.frames["board"].SaveAnnotation(this.form)'> 
+</form></body></html>

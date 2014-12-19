@@ -1,0 +1,55 @@
+<html><head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<style type='text/css'>
+body { background-color:#EEEEEE;color:#000000;font-size:10pt;line-height:12pt;font-family:Verdana; }
+td { vertical-align:top; font-size:10pt;line-height:12pt;font-family:Verdana; }
+a {color:#000000; text-decoration: none}
+a:hover {color:#FFFFFF; background-color:#808080}
+</style>
+<title>LT-PGN-VIEWER multi board example</title>
+</head><body>
+<table border=0 width=640 align=center><tr><td>
+<a href="#g1">[Go to game 1]</a><br />
+<a href="#g2">[Go to game 2]</a>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+This example shows, how you can use several boards within one webpage. All boards can play independently
+at the same time. The disadvantage is, that the loading of a page takes longer time, than in 
+<a href="multiboard2.html">[the multiboard example 2]</a> and in the 
+<a href="miniboarddemo.html">[miniboard example]</a>.
+</td></tr></table>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<a name="g1"></a>
+<table border=0 width=640 align=center><tr><td>
+<iframe name="g1" scrolling=no frameborder=0 width=255 height=280 src="ltpgnboard0.html?SetImagePath=cases27|"></iframe>
+</td><td><br />
+<center><b>Me vs. my computer</b></center>
+<div id="g1text">
+</div>
+</td></tr></table>
+<a name="g2"></a>
+<table border=0 width=640 align=center><tr><td><br />
+<center><b>My computer vs me</b></center>
+<div id="g2text">
+</div>
+</td><td>
+<iframe name="g2" scrolling=no frameborder=0 width=275 height=305 src="ltpgnboard0.html?SetImagePath=alpha30|&RotateBoard=true"></iframe>
+</td></tr></table>
+<script language='JavaScript'>
+function OpenGame(gg,tt)
+{ if (window.frames[gg].IsComplete)
+  { if (window.frames[gg].IsComplete())
+    { window.frames[gg].Init('');
+      window.frames[gg].ApplyPgnMoveText(tt,"#CCCCCC",window.document,gg);
+      document.getElementById(gg+"text").innerHTML=window.frames[gg].GetHTMLMoveText(0,false,true);
+      return;
+    }
+  }
+  setTimeout('OpenGame("'+gg+'","'+tt+'")',400);
+}
+function SetMove(mm,vv,gg){ if (window.frames[gg].SetMove) window.frames[gg].SetMove(mm,vv); }
+OpenGame("g1","1.d4 Nf6 2.c4 e6 3.Nc3 Bb4 4.Bd2 Nc6 5.e3 d5 6.Nf3 O-O 7.a3 Bd6 8.b4 b6 9.b5 Ne7 10.Bd3 Bb7 11.O-O c5 12.Ne5 Bxe5 13.dxe5 Nd7 14.f4 dxc4 15.Bxc4 Nd5 16.e4?! {this allows black to gain a pawn, in return white obtains a superior position} 16. ... Nxc3 17.Bxc3 Bxe4 18.Qe2 Bb7 19.Rad1 Qe7 20.Rd6 Nf6 21.exf6 Qxd6 22.fxg7 Rfd8 23.Bb3 c4? (23. ... Qd3 {was probably the best black could do to get some counter play}) 24.Bc2 Qc5+ 25.Kh1 Qxb5 26.Bxh7+ Kxh7 27.f5! {separating the black queen from the h5 square} e5 28.Qh5+ Kxg7 29.f6+ Kg8 30.Qh6 Bxg2+ 31.Kxg2 Rd2+ 32.Bxd2 Qd5+ 33.Kg1 Qd4+ 34.Rf2 Qg4+ 35.Rg2 Qxg2+ 36.Kxg2 Rd8 37.Qg7++ 1-0");
+OpenGame("g2","1.e4 e5 2.Nf3 Nc6 3.Bc4 Bd6 4.Bb5 Nf6 5.Qe2 O-O 6.Nc3 Nd4 7.Nxd4 exd4 8.Nb1 c6 9.Ba4 b5 10.Bb3 Nxe4 11.O-O (11.Qxe4? Re8 {and the queen is pinned}) 11. ... Nc5 12.c3? d3! {Now white is in real trouble} 13.Qh5 Bb7 14.Bd1 Ne6 {giving up the d3 to gain tempo for a king side attack} 15.Qf3 Qc7 {suddenly the Bd6 which seemed to be misplaced, because it blocked the d7 pawn, becomes very strong} 16.g3 f5 17.Qxd3 f4 18.Bc2 g6 19.Qe2 c5 20.Qxb5 ({The final blunder. A little hope remains with} 20.Be4 {and a possible continuation} 20. ... Bxe4 21.Qxe4 fxg3 22.hxg3 Bxg3 23.fxg3 Qxg3+ 24.Qg2 Rxf1+ 25.Kxf1 Rf8+ 26.Kg1 Qe1+ 27.Kh2 Rf2) 20. ... fxg3 21.hxg3 Bxg3 22.f4 Nxf4 23.Bb3+ Kg7 {Ending with the typical computer moves in lost positions:} 24.Bd5 Bxd5 25.Rf3 Bxf3 26.Kf1 Rfe8 27.Qe2 Rxe2 28.b3 Re1++ 0-1");
+</script>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body></html>

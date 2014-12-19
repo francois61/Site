@@ -1,0 +1,68 @@
+<?php
+function Parse($game)
+{try
+{
+	$bdd = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+}
+catch (Exception $e){
+        die('Erreur : ' . $e->getMessage());
+}
+$ch = explode("\"",$game);
+
+for($i=0;$i<sizeof($ch);$i++)
+	{
+		if(preg_match("#Event#",$ch[$i]))
+			{
+			$event=$ch[$i+1];
+			}
+		if(preg_match("#Site#",$ch[$i]))
+			{
+			$site=$ch[$i+1];
+			}
+		if(preg_match("#Date#",$ch[$i]))
+			{
+			$date=$ch[$i+1];
+			}
+		if(preg_match("#Round#",$ch[$i]))
+			{
+			$round=$ch[$i+1];
+			}
+		if(preg_match("#\[White $#",$ch[$i]))
+			{
+			$white=$ch[$i+1];
+			
+			}
+		if(preg_match("#\[Black $#",$ch[$i]))
+			{
+			$black=$ch[$i+1];
+			}
+		if(preg_match("#Result#",$ch[$i]))
+			{
+			$result=$ch[$i+1];
+			}
+		if($i==sizeof($ch)-1)
+			{
+			$moves = substr($ch[$i],1);
+			}
+	}
+	
+$req = $bdd->prepare('INSERT INTO partie(event, site, date, round, joueur_blanc, joueur_noir,resultat,moves) VALUES(:event, :site, :date, :round, :white, :noir, :result, :moves)');
+$req->execute(array(
+	'event'=>$event,
+	'site'=>$site,
+	'date'=>$date,
+	'round'=>$round,
+	'white'=>$white,
+	'noir'=>$black,
+	'result'=>$result,
+	'moves'=>$moves
+	));
+echo 'La partie a bien été ajouté !';
+
+}
+$pgn=file_get_contents("Philidor.pgn");
+$pgn=cleanPgn($pgn);	
+$ret=getPgnGamesAsArray($pgn);
+//Parse($ret[0]);
+
+?>

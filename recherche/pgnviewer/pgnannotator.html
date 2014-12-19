@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META NAME="description" content="LT-PGN-VIEWER 3.4 is a free JavaScript PGN Viewer ">
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-PGN-ANNOTATOR</TITLE>
+</HEAD>
+<script language="JavaScript">
+var FileName="blank.html";
+function GetUrlString()
+{ var ii, jj, aa, uurl = window.location.search;
+  if (uurl != "")
+  { uurl = uurl.substring(1, uurl.length);
+    var llist = uurl.split("&");
+    uurl="";
+    for (ii=0; ii<llist.length; ii++)
+    { if (llist[ii].search("=")>0) uurl+="&"+llist[ii];
+      else FileName=llist[ii];
+    }
+    uurl=uurl.substring(1, uurl.length);
+    if (uurl!="") return("?"+uurl);
+  }
+  return("");
+}
+document.open();
+document.writeln("<FRAMESET rows=\"380,*\" border=1 frameborder=1 framespacing=1>");
+document.writeln("<FRAMESET cols=\"310,*\" border=1 frameborder=1 framespacing=1>");
+document.writeln("<frame src=\"ltpgnboard.html"+GetUrlString()+"\" name=\"board\" scrolling=no>");
+document.writeln("<frame src=\""+FileName+"\" name=\"text\" scrolling=auto>");
+document.writeln("</FRAMESET>");
+document.writeln("<frame src=\"blank.html\" name=\"annotation\" scrolling=yes>");
+document.writeln("</FRAMESET>");
+document.close();
+</script>
+</HTML>

@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+<SCRIPT language="JavaScript">
+if (! parent.menuframe) location.href="miniboarddemo.html";
+
+var gameNumber=-1, gameText="";
+function ShowGame(n,fen)
+{ if (document.getElementById)
+  { if (gameNumber>=0) document.getElementById("g"+gameNumber).innerHTML=gameText;
+    gameNumber=n;
+    if (gameNumber>=0) gameText=document.getElementById("g"+gameNumber).innerHTML;
+    else gameText="";
+    if (fen) parent.menuframe.Init(fen);
+    else parent.menuframe.Init('standard');
+    parent.menuframe.ApplyPgnMoveText(gameText,'#cccccc',window.document); 
+    if (gameNumber>=0) document.getElementById("g"+gameNumber).innerHTML=parent.menuframe.GetHTMLMoveText(0,false,true); 
+  }
+  else alert("Sorry, this works only with modern browsers.");
+}
+function SetMove(mm,vv){ if (parent.menuframe.SetMove) parent.menuframe.SetMove(mm,vv); }
+</SCRIPT>
+<style type='text/css'>
+body {background-color:#FFFFFF;color:#000000;margin-left:10px;margin-top:10px;font-size:10pt;line-height:12pt;font-family:Verdana}
+a {color:#000000; text-decoration: none;}
+a:hover {color:#FFFFFF; background-color:#808080}
+td {text-align:left; vertical-align:top}
+</style>
+<HEAD>
+<BODY>
+This example shows, how you can use a bord in a menu for several games of a webpage. The page will load
+faster than in the <a href="multiboard1.html" target=_parent>[the multiboard example 1]</a> and in the 
+<a href="multiboard2.html" target=_parent>[the multiboard example 2]</a> because there is only one board to load 
+and the pgn is parsed only when you click on a link to replay the game.<br />
+You can also click on the board to make some other moves than specified in the game text.
+<hr />
+
+<a name="game1"></a>
+<H3>My best game</H3>
+<PRE> 
+[Event "coffe break"]
+[Site "my kitchen"]
+[Date "some years ago"]
+[Round "?"]
+[White "me"]
+[Black "my computer"]
+[Result "1-0"]
+</PRE>
+<div id="g1">
+1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.d3 Nf6 5.Bg5 h6 6.Bxf6 Qxf6 7.Nc3 Nd4 8.Nxd4 Bxd4 9.Qd2 c6 10.O-O d6 11.Kh1 b5 12.Bb3 Be6 13.f4 Bxb3 14.axb3 a5 15.Rf3 Qe6 16.Raf1 O-O 17.f5 Qf6 18.Ne2 Bxb2 19.c3 Ba3 20.Ng3 d5 21.Nh5 Qh4 22.Rh3 Qg5 23.Qe2 Qe7 24.f6 Qc5 25.Nxg7 Rfc8 26.Qg4 Bc1 27.Ne6+ Bg5 28.Nxg5 Kf8 29.Rxh6 Ke8 30.Nxf7 1-0
+</div>
+<A href="javascript:ShowGame(1)">[click here to replay]</A>
+<hr />
+
+<a name="game2"></a>
+<H3>My shortest game</h3>
+<center><b>Me vs. my computer</b></center>
+<div id="g2">
+1.e4 e6 2.d4 d5 3.e5 c5 4.Nf3 Nd7 5.dxc5 Bxc5 6.Bd3 Ne7 7.O-O Nc6 8.Qe2 Nd4 9.Nxd4 Bxd4 10.Bb5 Qc7 11.Bxd7+ Bxd7 12.Re1 Qb6 13.c3 Bb5 14.Qf3 Bc5 15.a4 Qa6 16.b4 Bb6 17.a5 O-O 18.Qg3 Rfc8 19.Bh6 g6 20.axb6 Qxa1 21.Qg5 f5 22.Qe7 Rc7 23.bxc7 Qa6 24.Qg7+ 1-0
+</div>
+<A href="javascript:ShowGame(2)">[click here to replay]</A>
+<hr />
+
+<a name="game3"></a>
+<H3>My luckiest game</H3>
+<center><b>Me vs. my computer</b></center>
+<div id="g3">
+1.e4 c5 2.Bc4 e6 3.Nf3 d6 4.O-O Nf6 5.d3 Nc6 6.c3 d5 7.exd5 exd5 8.Bb3 Be7 9.d4 cxd4 10.cxd4 Bg4 11.a3 Bxf3 12.Qxf3 Nxd4 13.Qd3 Nxb3 14.Qxb3 Qd7 15.Nc3 O-O 16.Bg5 d4 17.Bxf6 Bxf6 18.Ne4 Be5 19.f4 Bc7 20.f5 Rfe8 21.Qf3 Bb6 22.Kh1 Rac8 23.f6 g6 24.Qf4 Bc5 25.Nxc5 Qf5 26.Qh6 Qxf6 27.Rxf6 Rxc5 28.Raf1 1-0
+</div>
+<A href="javascript:ShowGame(3)">[click here to replay]</A>
+<hr />
+
+<a name="game4"></a>
+<H3>My hardest game</H3>
+<center><b>Me vs. my computer</b></center>
+<div id="g4">
+1.d4 g6 2.e4 Bg7 3.Nf3 d6 4.h3 Nf6 5.Bd3 Nc6 6.O-O Nb4 7.c3 Nxd3 8.Qxd3 Bd7 9.e5 Nd5 10.c4 Bf5 11.Qd2 Nb6 12.b3 Be4 13.Ng5 Bxb1 14.e6 Bf5 15.Nxf7 Qc8 16.d5 Bxa1 17.Nxh8 Bxh8 18.Qh6 g5 19.Qxg5 Bg6 20.f4 Bd4+ 21.Kh1 Bf6 22.Qh6 Bd3 23.f5 c6 24.Rf3 cxd5 25.Rg3 Kd8 26.Rg8+ Kc7 27.Rxc8+ Rxc8 28.Bg5 dxc4 29.Bxf6 exf6 30.Qxf6 Be4 31.bxc4 Kb8 32.e7 Ka8 33.Qe6 Bc6 34.f6 Bd7 35.Qxd6 Be8 36.Qe6 Bd7 37.Qf7 Nxc4 38.Qf8 Be8 39.f7 Nd6 40.fxe8=Q Rxe8 41.Qf6 Nc8 42.Qe6 Nxe7 43.Qd7 Rc8 44.Qxe7 1-0
+</div>
+<A href="javascript:ShowGame(4)">[click here to replay]</A>
+<hr />
+
+<a name="game5"></a>
+<H3>My latest game</H3>
+<center><b>Me vs. my computer</b></center>
+<div id="g5">
+1.e4 e5 2.Bc4 f5 3.exf5 Qg5 4.g4 Nf6 5.h3 Qf4 6.d3 Qd4 7.c3 Qb6 8.g5 d5 9.Bb3 Ng8 10.Qh5+ Kd8 11.Qf7 Ne7 12.f6 gxf6 13.gxf6 Nf5 14.Qxd5+ Nd7 15.Nf3 c6 16.Qf7 Bc5 17.O-O Rf8 18.Qxh7 Ng3 19.f7 Nxf1 20.Qh4+ Kc7 21.Kxf1 Qa6 22.Bc4 b5 23.Be6 Bd6 24.b4 Nb6 25.Bg4 Bxg4 26.hxg4 Rxf7 27.Nbd2 Raf8 28.g5 Rxf3 29.Nxf3 Rxf3 30.g6 Rxd3 31.Bg5 Qa4 32.Qh7+ Nd7 33.g7 Rd1+ 34.Kg2 Rxa1 35.Bd8+ Kxd8 36.g8=Q+ Nf8 37.Qd3 Kc7 38.Qf7+ Nd7 39.Qe6 Kb7 40.Qexd6 Nf6 41.Qxf6 Qd1 42.Qe7+ Ka6 43.Qxd1 Rxd1 44.Qxe5 1-0
+</div>
+<A href="javascript:ShowGame(5)">[click here to replay]</A>
+
+
+<br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br />
+</BODY></HTML>

@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<script language="JavaScript">
+if (! parent.textframe) location.href="miniboarddemo.html";
+</script>
+<script language="JavaScript" src="ltpgnviewer.js"></script>
+<base target="textframe">
+<style type='text/css'>
+body { background-color:#FFFFFF;color:#000000;margin-left:4px;margin-top:4px;font-size:10pt;font-family:Verdana}
+a {color:#000000; text-decoration: none;}
+a:hover {color:#FFFFFF; background-color:#808080}
+td {text-align:left; vertical-align:top}
+img {position:relative}
+</style>
+</HEAD>
+<BODY>
+<font size="-2">Start with a title and logo:</font><br />
+<div align=center>
+<font size="+2"><b>My chess website</b></font>
+<img src="mini18/wk.gif" width=108 height=108 border=0><br />
+</div>
+<br />
+<font size="-2">Append some menu:</font><br />
+<b>My best game</b><br />
+&nbsp;&nbsp;&nbsp;<a href="miniboardtext.html#game1">[Game 1]</a><br />
+<b>My shortest game</b><br />
+&nbsp;&nbsp;&nbsp;<a href="miniboardtext.html#game2">[Game 2]</a><br />
+<b>My luckiest game</b><br />
+&nbsp;&nbsp;&nbsp;<a href="miniboardtext.html#game3">[Game 3]</a><br />
+<b>My hardest game</b><br />
+&nbsp;&nbsp;&nbsp;<a href="miniboardtext.html#game4">[Game 4]</a><br />
+<b>My latest game</b><br />
+&nbsp;&nbsp;&nbsp;<a href="miniboardtext.html#game5">[Game 5]</a><br />
+<br />
+<font size="-2">Finally, paste the viewer into the menu:</font><br />
+
+
+<a name="Miniboard"></a>
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<FORM name=BoardForm>
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<script language="JavaScript">
+<!--
+SetImagePath("mini18/");//use this function when your images are in another directory
+ImageOffset=document.images.length;
+document.writeln("<table border=0 cellpadding=1 cellspacing=0><tr><th bgcolor=#808080>");
+document.write("<TABLE border=0 cellpadding=0 cellspacing=0><TR>");
+for (var ii=0; ii<64; ii++)
+{ if ((9*ii-ii%8)%16==0) document.write("<TD background='"+ImagePath+"w.gif'>");
+  else document.write("<TD background='"+ImagePath+"b.gif'>");
+  document.write("<IMG SRC='"+ImagePath+"t.gif' id='"+ii+"' onMouseDown='BoardClick("+ii+")'></TD>");
+  if (ii%8==7)
+  { if (ii<63) document.write("</TR><TR>");
+    else document.writeln("</TR></TABLE>");
+  }
+}
+document.writeln("</th></tr></table>");
+document.writeln("<TABLE border=0 cellpadding=0 cellspacing=0><TR>");
+document.writeln("<TD><input type=button value='I&lt;' width=16 style='width:19' onClick=\"javascript:Init('')\"></TD>");
+document.writeln("<TD><input type=button value='&lt;' width=16 style='width:19' onClick=\"javascript:MoveBack(1)\"></TD>");
+document.writeln("<TD><input type=button value='&gt;' width=16 style='width:19' onClick=\"javascript:MoveForward(1)\"></TD>");
+document.writeln("<TD><input type=button value='&gt;I' width=16 style='width:19' onClick=\"javascript:MoveForward(1000)\"></TD>");
+document.writeln("<TD><input type=text name='Position' value='' size=8></TD>");
+document.writeln("</TR></TABLE>");
+//-->
+</script>
+</td></tr></table>
+</FORM>
+<script language="JavaScript">
+Init('');
+AllowRecording(true);
+setTimeout("RefreshBoard(true)",1000);
+//SetDragDrop(1);
+</script>
+</td></tr></table>
+
+<br /><br /><br /><br /><br /><br /><br /><br />
+</BODY>
+</HTML>

@@ -1,0 +1,10 @@
+[Event "IBM Kasparov vs. Deep Blue Rematch"]
+[Site "New York, NY USA"]
+[Date "1997.05.04"]
+[Round "2"]
+[White "Deep Blue"]
+[Black "Kasparov, Garry"]
+
+
+{The game will start soon...}
+

@@ -1,0 +1,58 @@
+<html><head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<style type='text/css'>
+body { background-color:#EEEEEE;color:#000000;font-size:10pt;line-height:12pt;font-family:Verdana; }
+td { vertical-align:top; font-size:10pt;line-height:12pt;font-family:Verdana; }
+a {color:#000000; text-decoration: none}
+a:hover {color:#FFFFFF; background-color:#808080}
+</style>
+<title>LT-PGN-VIEWER multi board example</title>
+</head><body>
+<table border=0 width=640 align=center><tr><td>
+<a href="#g1">[Go to game 1]</a><br />
+<a href="#g2">[Go to game 2]</a>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+This example shows, how you can use several boards within one webpage. All boards can play independently
+at the same time. Here you must first click on a link at the top of a game, before you can play through.
+However the advantage is, that the loading of a page is faster than in 
+<a href="multiboard1.html">[the multiboard example 1]</a> and not much slower than in the 
+<a href="miniboarddemo.html">[miniboard example]</a>.
+</td></tr></table>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<a name="g1"></a>
+<table border=0 width=640 align=center><tr><td>
+<iframe name="g1" scrolling=no frameborder=0 width=275 height=305 src="ltpgnboard0.html?SetImagePath=alpha30|"></iframe>
+</td><td><br />
+<a href="javascript:OpenGame(1)">[Click here to replay the game]</a>
+<center><b>Me vs. my computer</b></center>
+<div id="g1text">
+1.e4 c6 2.d4 d5 3.e5 Bf5 4.Nf3 Nd7 5.c3 e6 6.Be2 Ne7 7.O-O c5 8.Nh4 cxd4 9.cxd4 Bxb1 10.Rxb1 Rc8 11.Bg4 g6 12.Bg5 Bg7 13.Qf3 Qa5 14.Rfe1 Qxa2 15.Bf6 Bxf6 16.exf6 Nc6 17.Bxe6 fxe6 18.Qg4 Rf8 19.Qxe6+ Kd8 20.f7 Qa4 21.b4 Qb5 22.Nf3 Qc4 23.b5 Nxd4 24.Qe7+ Kc7 25.Rbc1 Nc2 26.Nd4 Kb8 27.Nxc2 Qc7 28.g3 d4 29.Nxd4 Qxc1 30.Rxc1 Rxc1+ 31.Kg2 Rc7 32.Ne6 Rfc8 33.Nxc7 Kxc7 34.Kf3 Rd8 35.Kf4 Kc8 36.Kg5 Nf8 37.Kh6 g5 38.Kg7 Ng6 39.Qe8 a5 40.Kxh7 Nf8+ 41.Kg7 Nd7 42.Qe6 b6 43.Kg6 Rf8 44.Kxg5 Kd8 45.h4 a4 46.h5 a3 47.h6 a2 48.Qxa2 Ke7 49.h7 Rc8 50.Kg6 Nf8+ 51.Kh6 Nxh7 52.Kxh7 Kf6 53.Qd5 Rf8 54.Qf3+ Ke6 55.Kg7 Rxf7+ 56.Qxf7+ 1-0
+</div>
+</td></tr></table>
+<a name="g2"></a>
+<table border=0 width=640 align=center><tr><td><br />
+<a href="javascript:OpenGame(2)">[Click here to replay the game]</a>
+<center><b>My computer vs me</b></center>
+<div id="g2text">
+1.c4 e5 2.Nc3 Nf6 3.Nf3 Nc6 4.g3 Bc5 5.Bg2 O-O 6.Na4 d6 7.Nxc5 dxc5 8.d3 Qd6 9.O-O Nd4 10.Bd2 Re8 11.Ng5 h6 12.Ne4 Nxe4 13.Bxe4 Bh3 14.Re1 c6 15.e3 Ne6 16.Bc3 f5 17.Bh1 Ng5 18.f4 Nf7 19.fxe5 Nxe5 20.Qb3 Re7 21.Bxe5 Qxe5 22.Bf3 Qf6 23.Qa3 Rae8 24.Qxa7 Rxe3 25.Rxe3 Rxe3 26.Qb8+ Kh7 27.Qf4 Rxd3 28.Be2 Qxb2 29.Re1 Rd2 30.Qh4 Rxe2 31.Rxe2 Qc1+! {taking the rock would probably lead to a draw only} 32.Kf2 Qf1+ 33.Ke3 Bg4 {now the white queen is separated and there is no safe square for the rock} 34.Rb2 (34.Rf2 Qe1+) (34.Rd2 Qf3++) (34.Rc2 Qd1) 34. ... Qc1+ 35.Kd3 Qxb2 36.Qe7 Qd4+ 37.Kc2 Bd1+ 38.Kc1 Qd3 0-1
+</div>
+</td><td>
+<iframe name="g2" scrolling=no frameborder=0 width=255 height=280 src="ltpgnboard0.html?SetImagePath=cases27|&RotateBoard=true"></iframe>
+</td></tr></table>
+<script language='JavaScript'>
+var IsOpen=new Array();
+function OpenGame(nn)
+{ if (IsOpen[nn]) return;
+  if (! document.getElementById) return;
+  var gameText=document.getElementById("g"+nn+"text").innerHTML;
+  window.frames["g"+nn].Init('');
+  window.frames["g"+nn].ApplyPgnMoveText(gameText,"#CCCCCC",window.document,"g"+nn);
+  document.getElementById("g"+nn+"text").innerHTML=window.frames["g"+nn].GetHTMLMoveText(0,false,true);
+  window.frames["g"+nn].SwitchAutoPlay();
+  IsOpen[nn]=true;
+}
+function SetMove(mm,vv,gg){ if (window.frames[gg].SetMove) window.frames[gg].SetMove(mm,vv); }
+</script>
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+</body></html>

@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<title>PGNcontrol</title>
+<script language="JavaScript" src="ltpgnviewer.js"></script>
+<style type='text/css'>
+body { background-color:#FFFFFF;color:#000000;margin-left:4px;margin-top:4px;font-size:10pt;font-family:Verdana}
+a {color:#000000; text-decoration: none;}
+a:hover {color:#FFFFFF; background-color:#808080}
+td {text-align:left; vertical-align:top}
+img {position:relative}
+</style>
+</HEAD>
+<BODY leftmargin=0 topmargin=0 rightmargin=0 bottommargin=0 onresize="Resize()">
+<table border=0 cellpadding=0 cellspacing=0 align=center><tr><td align=center>
+<FORM name=BoardForm>
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<script language="JavaScript">
+<!--
+SetImagePath("mini18/");//use this function when your images are in another directory
+ImageOffset=document.images.length;
+document.writeln("<table border=0 cellpadding=1 cellspacing=0><tr><th bgcolor=#808080>");
+document.write("<TABLE border=0 cellpadding=0 cellspacing=0><TR>");
+for (var ii=0; ii<64; ii++)
+{ if ((9*ii-ii%8)%16==0) document.write("<TD background='"+ImagePath+"w.gif'>");
+  else document.write("<TD background='"+ImagePath+"b.gif'>");
+  document.write("<IMG SRC='"+ImagePath+"t.gif' id='"+ii+"' onMouseDown='BoardClick("+ii+")'></TD>");
+  if (ii%8==7)
+  { if (ii<63) document.write("</TR><TR>");
+    else document.writeln("</TR></TABLE>");
+  }    
+}
+document.writeln("</th></tr></table>");
+document.writeln("<TABLE border=0 cellpadding=0 cellspacing=0><TR>");
+document.writeln("<TD><input type=button value='I&lt;' width=23 style='width:26' onClick=\"javascript:Init('')\"></TD>");
+document.writeln("<TD><input type=button value='&lt;' width=23 style='width:26' onClick=\"javascript:MoveBack(1)\"></TD>");
+document.writeln("<TD><input type=button value='&gt;' width=23 style='width:26' onClick=\"javascript:MoveForward(1)\"></TD>");
+document.writeln("<TD><input type=button value='&gt;I' width=23 style='width:26' onClick=\"javascript:MoveForward(1000)\"></TD>");
+document.writeln("<TD><input type=button value=' ok ' width=33 style='width:37' onClick=\"javascript:SavePGN()\"></TD>");
+document.writeln("</TR><TR>");
+document.writeln("<TD colspan=5><input type=text name='Position' value='' size=19><input type='hidden' name='PgnMoveText'></TD>");
+document.writeln("</TR></TABLE>");
+//-->
+</script>
+</td></tr></table>
+</FORM>
+<script language="JavaScript">
+Init('');
+AllowRecording(true);
+AllowNullMove(false);
+var PGNTarget="";
+function SetPGNTarget(tt)
+{ PGNTarget=eval("window.opener."+tt);
+}
+EvalUrlString();
+setTimeout("RefreshBoard(true)",1000);
+function SavePGN()
+{ if(PGNTarget) PGNTarget.value=document.BoardForm.PgnMoveText.value;
+  else window.close();
+}
+function Resize()
+{ var ww=window.innerWidth;
+  var hh=window.innerHeight;
+  if ((!ww)||(!hh))
+  { ww=document.body.offsetWidth;
+    hh=document.body.offsetHeight;
+  }
+  if ((!ww)||(!hh)) return;
+  ww-=18;
+  hh-=58;
+  if (ww>hh) ww=hh;
+  hh=Math.floor(ww/8);
+  if (hh<20) hh=20;
+  for (ii=0; ii<64; ii++)
+  { document.images[ii].width=hh;
+    document.images[ii].height=hh;
+  }
+}
+</script>
+</td></tr></table>
+</BODY>
+</HTML>

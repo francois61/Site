@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<META NAME="description" content="LT-PGN-VIEWER 3.4 is a free JavaScript PGN Viewer ">
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-PGN-VIEWER 3.4</TITLE>
+</HEAD>
+<script language="JavaScript">
+
+var DefaultFileName="blank.html";
+var UpdateInterval=10; //10 seconds
+//You can increase this to 30 seconds or so
+//Never use less than 5 seconds!
+
+var PgnFileName=DefaultFileName;
+var colwidth=314;
+var size=32;
+function GetUrlString()
+{ var ii, jj, aa, nn, ss, bb=0, uurl = window.location.search;
+  if (uurl != "")
+  { uurl = uurl.substring(1, uurl.length);
+    if (uurl.indexOf("SetBorder=")>=0) bb=18;
+    var llist = uurl.split("&");
+    uurl="";
+    for (ii=0; ii<llist.length; ii++)
+    { if (llist[ii].search("=")>0) uurl+="&"+llist[ii];
+      else PgnFileName=llist[ii];
+      if (llist[ii].search("SetImagePath=")==0)
+      { nn=0; ss=0;
+        for (jj=13; jj<llist[ii].length; jj++)
+        { if (isNaN(llist[ii].charAt(jj))) nn=0;
+          else { nn*=10; nn+=parseInt(llist[ii].charAt(jj)); ss=nn; }
+        }
+        colwidth=8*(ss+1)+42+bb;
+        size=ss;
+      }
+    }
+    uurl=uurl.substring(1, uurl.length);
+    if (uurl!="") return("?"+uurl);
+  }
+  return("");
+}
+function ChangeColWidth(dd)
+{ var cc=colwidth+dd*size-dd;
+  if (document.getElementById) document.getElementById('fs').setAttribute('cols',cc+',*');
+}
+var urlstr=GetUrlString();
+document.open();
+document.writeln("<FRAMESET rows=\"*,0\" border=0 frameborder=0 framespacing=0 noresize>");
+document.writeln("<FRAMESET id='fs' cols=\""+colwidth+",*\" border=1 frameborder=1 framespacing=1>");
+document.writeln("<frame src=\"ltpgnboard.html"+urlstr+"\" name=\"board\" scrolling=no>");
+document.writeln("<frame src=\""+DefaultFileName+"\" name=\"text\" scrolling=auto>");
+document.writeln("</FRAMESET>");
+document.writeln("<frame src=\""+PgnFileName+"\" name=\"pgnfile\" scrolling=no noresize>");
+document.writeln("</FRAMESET>");
+document.close();
+if (PgnFileName!=DefaultFileName) setTimeout("UpdateViewer(-1)",400);
+var LastFileContent="";
+function UpdateViewer(nn)
+{ var ll=0;
+  if (window.frames[0].IsComplete)
+  { if (window.frames[0].IsComplete())
+    { if (window.frames[2].document.documentElement) 
+      { ss=window.frames[2].document.documentElement.innerHTML;
+        if (ss!="") ll=ss.length;
+        if (ll!=nn)
+        { setTimeout("UpdateViewer("+ll+")",400); //file is not complete loaded yet
+          return;
+        }
+        if (ll==0)
+        { setTimeout("UpdateFile()",UpdateInterval*1000); //file is still empty
+          return;
+        }
+        ss=ss.replace(/\<html\>/i,'');  
+        ss=ss.replace(/\<\/html\>/i,'');
+        ss=ss.replace(/\<head\>/i,'');  
+        ss=ss.replace(/\<\/head\>/i,'');  
+        ss=ss.replace(/\<body\>/i,'');  
+        ss=ss.replace(/\<\/body\>/i,'');
+        ss=ss.replace(/\<pre\>/i,'');  
+        ss=ss.replace(/\<\/pre\>/i,'');  
+        ss=ss.replace(/\<xmp\>/i,'');  
+        ss=ss.replace(/\<\/xmp\>/i,'');    
+        ss=ss.replace(/&quot;/g,'"');
+        ss=" "+ss;
+        if (ss!=LastFileContent)
+        { window.frames[0].SkipRefreshBoard(1);
+          var mm=window.frames[0].GetValue("MoveCount");
+          var cc=window.frames[0].GetValue("CurVar");
+          var oo, nn=-1;
+          if (window.frames[1].document.forms[0])
+          { if (window.frames[1].document.forms[0].GameList)
+            { oo=window.frames[1].document.forms[0].GameList.options;
+              nn=oo[oo.selectedIndex].value;
+            }
+          }
+          if (nn>=0) window.frames[0].ParsePgn(1,nn,ss);
+          else window.frames[0].ParsePgn(1,"-",ss);
+          LastFileContent=ss;
+          if ((!isNaN(mm))&&(!isNaN(cc))) setTimeout("window.frames[0].SkipRefreshBoard(0);window.frames[0].SetMove("+mm+","+cc+")",800); 
+          else setTimeout("window.frames[0].SkipRefreshBoard(0)",800);
+          setTimeout("UpdateFile()",UpdateInterval*1000);
+          return;
+        }
+        else
+        { setTimeout("UpdateFile()",UpdateInterval*1000); //file is unchanged
+          return;
+        }
+      }   
+    }
+  }
+  setTimeout("UpdateViewer(-1)",400);
+}
+function UpdateFile()
+{ if (PgnFileName.substr(0,8)=="livetest")
+  { var nn=parseInt(PgnFileName.charAt(8));
+    if (nn<9) nn++;
+    PgnFileName="livetest"+nn+".txt";
+    window.frames[2].location.href=PgnFileName;
+  }
+  else window.frames[2].location.reload();
+  setTimeout("UpdateViewer(-1)",400);
+}
+</script>
+</HTML>

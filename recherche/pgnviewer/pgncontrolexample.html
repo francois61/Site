@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<META NAME="description" content="LT-PGN-VIEWER 3.4 is a free JavaScript PGN Viewer ">
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-PGN-CONTROL-EXAMPLE</TITLE>
+<style type='text/css'>
+body {background-color:#EEEEEE;color:#000000; font-size:10pt; font-family:Verdana;}
+a {color:#000000; text-decoration: none}
+a:hover {color:#FFFFFF; background-color:#808080}
+td {text-align:left; vertical-align:top}
+</style>
+</HEAD>
+<BODY>
+<form>
+This example shows, how you can use the LT-PGN-CONTROL in your web pages.<br>
+You can even resize the popup window, the board size will be adjusted automaticaly.<br>
+Make the following start position as an input type=hidden in your final document:<br>
+<input type=text name="FEN" value="rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2" size=64>
+<br><br>
+PGN:<input name="pgn1" value="" size=24 readonly>
+<input type="button" onClick="PGNControl('document.forms[0].pgn1')" value=" . . . ">
+<input type="button" value="clear" onClick="this.form.pgn1.value=''">
+<br>
+PGN:<input name="pgn2" value="" size=24 readonly>
+<input type="button" onClick="PGNControl('document.forms[0].pgn2')" value=" . . . ">
+<input type="button" value="clear" onClick="this.form.pgn2.value=''"><br><br>
+<input type=checkbox name="DragDrop" value=1>drag & drop
+</form>
+<script language="JavaScript">
+var PGNControlWindow;
+function PGNControl(target)
+{ var fen=document.forms[0].FEN.value;
+  while (fen.indexOf("/")>0) fen=fen.replace("/","|"); //we must do this for the Opera browser
+  if (PGNControlWindow)
+  { if (! PGNControlWindow.closed)
+    { with(PGNControlWindow)
+      { Init(fen);
+        SetPGNTarget(target);
+        PGNControlWindow.focus();
+      }
+      return;
+    }
+  }
+  var dd;
+  if (document.forms[0].DragDrop.checked) dd="&SetDragDrop=1";
+  else dd="";
+  var urlstr="?Init="+fen+"&SetPGNTarget="+target;
+  PGNControlWindow=window.open("ltpgncontrol.html"+urlstr+dd,"PGNControlWindow","width=154,height=200,menubar=no,locationbar=no,resizable=yes,status=no,scrollbars=no");
+  PGNControlWindow.focus();
+}
+</script>
+</BODY>
+</HTML>

@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<style type='text/css'>
+td {font-size:10pt; font-family:Verdana;}
+</style>
+<script language="JavaScript">
+var TargetWindow;
+function OKClick()
+{ var ii, oo, vv, cc;
+  if (document.forms[0].pgn.value=="") return;
+  var nn=1+parseInt(document.forms[0].ParseType.selectedIndex);
+  if (parent.parent.frames[0].document.BoardForm)
+  { oo=parent.parent.frames[0].document.BoardForm.ImagePath;
+    vv=oo.options[oo.options.selectedIndex].value;
+    if (vv) vv="&SetImagePath="+vv;
+    else vv="";
+    oo=parent.parent.frames[0].document.BoardForm.BGColor;
+    for (ii=0; ii<oo.length; ii++)
+    { if (oo[ii].checked) vv="?SetBGColor="+oo[ii].value+vv;
+    }
+    oo=parent.parent.frames[0].document.BoardForm.Border;
+    if (oo.options.selectedIndex>0) vv=vv+"&SetBorder=1";
+  }
+  TargetWindow=window.open("ltpgnviewer.html"+vv,"");
+  setTimeout('ParsePgn('+nn+')',400);
+}
+function ParsePgn(nn)
+{ if (!TargetWindow) return;
+  if (TargetWindow.frames[0].IsComplete)
+  { if (TargetWindow.frames[0].IsComplete())
+    { if (parent.parent.frames[0])
+      { if (parent.parent.frames[0].isDragDrop) TargetWindow.frames[0].SetDragDrop(1);
+        if (parent.parent.frames[0].isRecording) TargetWindow.frames[0].AllowRecording(true);
+        if (parent.parent.frames[0].isRotated) TargetWindow.frames[0].RotateBoard(true);
+        if (parent.parent.frames[0].document.BoardForm)
+        { var oo=parent.parent.frames[0].document.BoardForm.ScoreSheet;
+          var vv=oo.options[oo.options.selectedIndex].value;
+          TargetWindow.frames[0].SetScoreSheet(vv);
+        }
+      }
+      TargetWindow.frames[0].ParsePgn(nn,"-",document.forms[0].pgn.value);
+      return;
+    }
+  }
+  setTimeout('ParsePgn('+nn+')',400);
+}
+</script>
+</HEAD>
+<BODY topmargin=5 leftmargin=5 rightmargin=5 bottommargin=5>
+<div align=center>
+<form>
+<table border=0><tr>
+<td>Copy all the pgn text into the text area and click ok.</td>
+<td><select name="ParseType">
+<option value=1>ParsePgn=1
+<option value=2 selected>ParsePgn=2
+<option value=3>ParsePgn=3
+<option value=4>ParsePgn=4
+</select></td>
+<td><input type=button value=" ok " onClick="OKClick()"></td>
+</tr></table>
+<textarea name="pgn" rows=12 cols=60 wrap=virtual></textarea>
+</form>
+</div>
+</BODY>
+</HTML>

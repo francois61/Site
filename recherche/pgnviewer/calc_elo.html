@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>LT-ELO-CALCULATOR</title>
+<style type='text/css'>
+body { background-color:#FFFFFF;color:#000000;font-size:10pt;font-family:Verdana; }
+th { font-size:10pt;font-family:Verdana; }
+</style>
+<script language="JavaScript">
+function CalculateELO(f)
+{ var i, s, es, sumScore=0, sumExpectedScore=0, PlayersRating=1500, KValue=16, OpponentsRating;
+  if (f.PlayersOldRating.value) PlayersRating=parseInt(f.PlayersOldRating.value);
+  for (i=0; i<f.OpponentsRating.length; i++)
+  { if (f.OpponentsRating[i].value)
+    { OpponentsRating=parseInt(f.OpponentsRating[i].value);
+      s=parseFloat(f.Score[i].options[f.Score[i].selectedIndex].value);
+      es=ExpectedScore(PlayersRating,OpponentsRating);
+      f.ExpectedScore[i].value=Math.round(es*1000)/1000;
+      sumScore+=s;
+      sumExpectedScore+=es;      
+    }
+    else f.ExpectedScore[i].value="";
+  }
+  f.SumScore.value=sumScore;
+  f.SumExpectedScore.value=Math.round(sumExpectedScore*1000)/1000;
+  if (f.KValue.value) KValue=parseInt(f.KValue.value);
+  PlayersRating+=KValue*(sumScore-sumExpectedScore);
+  f.PlayersNewRating.value=Math.round(PlayersRating*1000)/1000;
+}
+function ExpectedScore(PlayersRating,OpponentsRating)
+{ return(1/(1+Math.pow(10,((OpponentsRating-PlayersRating)/400))));
+}
+</script>
+</head>
+<body>
+<div align="center">
+<form>
+ExpectedScore=1/(1+10^((R_opponent-R_player)/400))<br>
+R_new=R_old+K*(Sum(Score)-Sum(ExpectedScore))<br>
+<br>
+Player's old rating: <input size=8 name="PlayersOldRating"><br>
+<br>
+<table border=1 cellpadding=2 cellspacing=0 bgcolor=#dddddd>
+<tr><th nowrap>Opponent's Rating</th>
+    <th nowrap>Score</th>
+    <th nowrap>Expected Score</th>
+</tr>
+<tr><th><input size=8 name="OpponentsRating"></th>
+    <th><select name="Score"><option value="0">loss</option><option value="0.5">draw</option><option value="1">win</option></select></th>
+    <th><input size=12 name="ExpectedScore" readonly></th>
+</tr>
+<tr><th><input size=8 name="OpponentsRating"></th>
+    <th><select name="Score"><option value="0">loss</option><option value="0.5">draw</option><option value="1">win</option></select></th>
+    <th><input size=12 name="ExpectedScore" readonly></th>
+</tr>
+<tr><th><input size=8 name="OpponentsRating"></th>
+    <th><select name="Score"><option value="0">loss</option><option value="0.5">draw</option><option value="1">win</option></select></th>
+    <th><input size=12 name="ExpectedScore" readonly></th>
+</tr>
+<tr><th><input size=8 name="OpponentsRating"></th>
+    <th><select name="Score"><option value="0">loss</option><option value="0.5">draw</option><option value="1">win</option></select></th>
+    <th><input size=12 name="ExpectedScore" readonly></th>
+</tr>
+<tr><th><input size=8 name="OpponentsRating"></th>
+    <th><select name="Score"><option value="0">loss</option><option value="0.5">draw</option><option value="1">win</option></select></th>
+    <th><input size=12 name="ExpectedScore" readonly></th>
+</tr>
+<tr><th>Sum</th>
+    <th><input size=8 name="SumScore" readonly></th>
+    <th><input size=12 name="SumExpectedScore" readonly></th>
+</tr>
+</table>
+<br>
+K-value (16=Master, 32=Beginner) <input size=4 name="KValue" value="16"><br>
+<br>
+Player's new rating: <input size=12 name="PlayersNewRating" readonly>
+<input type="button" value="Calculate" onClick="CalculateELO(this.form)">
+</form>
+</div>
+</body>
+</html>

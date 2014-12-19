@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<TITLE>Label generator</TITLE>
+<style type="text/css">
+body { font-size:10pt; font-family:Verdana; }
+input.label {border:none;text-align:center}
+td { font-size:10pt; font-family:Verdana; }
+th { font-size:10pt; font-family:Verdana; }
+</style>
+</HEAD>
+<BODY bgcolor=#FFFFFF>
+
+<table border=0><tr><td valign=top>
+<table border=0 cellpadding=1 cellspacing=0><tr><th colspan=8 rowspan=8 bgcolor=#000000>
+<script language="JavaScript">
+var ii, ll=new Array(
+"br","bn","bb","bq","bk","bb","bn","br",
+"bp","bp","bp","bp","bp","bp","bp","bp",
+"t","t","t","t","t","t","t","t",
+"t","t","t","t","t","t","t","t",
+"t","t","t","t","t","t","t","t",
+"t","t","t","t","t","t","t","t",
+"wp","wp","wp","wp","wp","wp","wp","wp",
+"wr","wn","wb","wq","wk","wb","wn","wr");
+document.write("<TABLE border=0 cellpadding=0 cellspacing=0 bgcolor=#DDDDDD><TR>");
+for (ii=0; ii<64; ii++)
+{ document.write("<TD><IMG SRC='"+ll[ii]+".gif' border=1></TD>");
+  if (ii%8==7)
+  { if (ii<63) document.write("</TR><TR>");
+    else document.writeln("</TR></TABLE>");
+  }    
+}
+</script>
+</th>
+    <th><input type=text size=1 class="label" readonly value="8"></th><th><input type=text size=1 class="label" readonly value="1"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="7"></th><th><input type=text size=1 class="label" readonly value="2"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="6"></th><th><input type=text size=1 class="label" readonly value="3"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="5"></th><th><input type=text size=1 class="label" readonly value="4"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="4"></th><th><input type=text size=1 class="label" readonly value="5"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="3"></th><th><input type=text size=1 class="label" readonly value="6"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="2"></th><th><input type=text size=1 class="label" readonly value="7"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="1"></th><th><input type=text size=1 class="label" readonly value="8"></th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="a"></th>
+    <th><input type=text size=1 class="label" readonly value="b"></th>
+    <th><input type=text size=1 class="label" readonly value="c"></th>
+    <th><input type=text size=1 class="label" readonly value="d"></th>
+    <th><input type=text size=1 class="label" readonly value="e"></th>
+    <th><input type=text size=1 class="label" readonly value="f"></th>
+    <th><input type=text size=1 class="label" readonly value="g"></th>
+    <th><input type=text size=1 class="label" readonly value="h"></th><th bgcolor=#CCCCCC><img src="1x1.gif" width=8 height=8></th><th>&nbsp;</th></tr>
+<tr><th><input type=text size=1 class="label" readonly value="h"></th>
+    <th><input type=text size=1 class="label" readonly value="g"></th>
+    <th><input type=text size=1 class="label" readonly value="f"></th>
+    <th><input type=text size=1 class="label" readonly value="e"></th>
+    <th><input type=text size=1 class="label" readonly value="d"></th>
+    <th><input type=text size=1 class="label" readonly value="c"></th>
+    <th><input type=text size=1 class="label" readonly value="b"></th>
+    <th><input type=text size=1 class="label" readonly value="a"></th><th>&nbsp;</th><th>&nbsp;</th></tr></table>
+<table border=0><tr><td><img src="w.gif"></td><td><img src="b.gif"></td><td>background images</td></tr></table>
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td valign=top>
+<script language="JavaScript">
+document.writeln("<table border=0 cellpadding=0 cellspacing=1><tr><th>");
+document.write("<TABLE border cellpadding=0 cellspacing=0 width=264 height=264><TR>");
+for (ii=0; ii<64; ii++)
+{ document.write("<TH bgcolor=#DDDDDD>"+ll[ii]+"</TH>");
+  if (ii%8==7)
+  { if (ii<63) document.writeln("</TR><TR>");
+    else document.writeln("</TR></TABLE>");
+  }    
+}
+document.writeln("</th><th bgcolor=#EEEEEE>8_1</th><th bgcolor=#EEEEEE>1_8</th></tr>");
+document.writeln("<tr><th bgcolor=#EEEEEE>a_h</th><th bgcolor=#CCCCCC>1x1</th><th>&nbsp;</th></tr>");
+document.writeln("<tr><th bgcolor=#EEEEEE>h_a</th><th>&nbsp;</th><th>&nbsp;</th></tr></table>");
+document.writeln("<table border=0 cellpadding=0 cellspacing=8><tr><th width=31 height=31 bgcolor=#EEEEEE>w</th><th width=31 height=31 bgcolor=#CCCCCC>b</th></tr></table");
+</script>
+</td>
+</tr></table>
+<br>
+This page will help you when you make your own chess figure sets. You need some gif images as shown in the diagram.
+For instance "br" means "black rock" and this is the image "br.gif". The image "1x1.gif" is a 
+transparent image of size 1x1, just use the image which is already included. 
+All images of the pieces must be with transparent background. There is an additional transparent image "t.gif" 
+which must have the same size as the images of the pieces.<br>
+Further you need the images "a_h.gif", "h_a.gif", "8_1.gif" and "1_8.gif" for the labels.
+The size of these images depends on the size of your pieces. If your pieces have the size 27x27, 30x30, 32x32, 33x33 or 
+35x35 then you can use one of the image sets from the main directory or from the additional chess set directories, otherwise
+you must create the images by your own. To get the images of the labels with the right distance between the letters, copy 
+this file into the directory with the images of your pieces, open the file with a modern browser (IE5+ or Netscape 6+), 
+make a screenshot (Alt+Print), open a graphics program and use "Edit->Paste" in the menu. Now you can cut the labels with
+the size <nobr>(8*piece size)x16</nobr> and save them as gif images.
+You can test different colors for the chess sets by simply editing the images "w.gif" and "b.gif".<br>
+When you want to print a chess diagram, then you must set the browser settings for "print background images",
+otherwise you would print a chess diagram whithout checker squares.
+</BODY>
+</HTML>

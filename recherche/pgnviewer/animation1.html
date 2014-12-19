@@ -1,0 +1,150 @@
+<HTML>
+<HEAD>
+<script language="JavaScript" src="ltpgnviewer.js"></script>
+<script language="JavaScript" src="ltpgnboard.js"></script>
+<link rel=stylesheet type="text/css" href="ltpgnviewer.css" />
+</HEAD>
+<BODY bgcolor="#EEEEEE">
+<script language="JavaScript" src="merlin.js"></script>
+<script language="JavaScript">
+document.writeln("<table border=0 align=center><tr><td><FORM name=BoardForm><table border=0><tr><td>");
+EvalUrlString("SetBGColor");
+if ((BGColor!="")&&(document.getElementsByTagName)) document.getElementsByTagName('BODY')[0].style.backgroundColor=BGColor;
+EvalUrlString("SetImagePath");
+if (ImagePath!="") SetBorder(0);
+EvalUrlString("SetBorder");
+EvalUrlString("SetBorderColor");
+WriteBoard(0);
+document.writeln("</td></tr></table></FORM>");
+Init('');
+AllowRecording(false);
+SetDragDrop(true);
+ShowLabels(true);
+AllowNullMove(false);
+SetPgnMoveText("1.e4 e5 2.Bc4 Bc5 3.Qh5 d6 4.Qxf7++");
+document.writeln("</td><td style='vertical-align:middle; width:360px'><H3 id='Msg'></H3>");
+document.writeln("</td></tr></table>");
+document.writeln("<div style='position:absolute;top:10px'><table border=0 width='100%'><tr><td style='text-align:right'><a href='#' onClick='javascript:Stop()' title='pause'>[ll]</a> <a href='#' onClick='javascript:Play()' title='continue'>[>]</a> <a href='#' onClick='javascript:window.close()' title='exit'>[x]</a></td></tr></table></div>");
+
+ActionList=new Array(
+"Wait(2000)",
+"Write('Hello, I am Merlin, your chess tutor.')",
+"Speak('Hello, I am Merlin, your chess tutor.')",
+"Wait(2000)",
+"Write('Welcome to a little chess lesson.')",
+"Speak('Welcome to a little chess lesson.')",
+"MerlinPlay('Explain')",
+"Wait(3000)",
+"Write('I will show you now, how to make a quick win.')",
+"Speak('I will show you now, how to make a quick win.')",
+"Wait(4000)",
+"MerlinPlay('GestureLeft')",
+"Write('Let\\'s start with e4.')",
+"Speak('Let\\'s start with e4.')",
+"Wait(2000)",
+"MoveForward(1)",
+"ExecCommands('CthisG')",
+"Wait(4000)",
+"MoveForward(1)",
+"ExecCommands('CthisB')",
+"Wait(1000)",
+"MerlinPlay('LookLeft')",
+"Write('Now when your opponent plays e5, then play Bc4.')",
+"Speak('Now when your opponent plays e5, then play Bc4.')",
+"MerlinPlay('GestureLeft')",
+"Wait(4000)",
+"MoveForward(1)",
+"ExecCommands('AthisG')",
+"Wait(4000)",
+"MoveForward(1)",
+"ExecCommands('AthisB')",
+"Wait(1000)",
+"MerlinPlay('GestureLeft')",
+"Write('Okay, he plays just the same as you, then go with your queen to h5.')",
+"Speak('Okay, he plays just the same as you, then go with your queen to h5.')",
+"Wait(4000)",
+"MoveForward(1)",
+"ExecCommands('AthisG')",
+"Wait(4000)",
+"MerlinPlay('Explain')",
+"Write('You are now attacking 2 squares, e5 and f7.')",
+"Speak('You are now attacking 2 squares, e5 and f7.')",
+"Wait(2000)",
+"ExecCommands('Ah5e5R,Ah5f7R')",
+"Wait(8000)",
+"MoveForward(1)",
+"ExecCommands('CthisB,Ad6e5R,Bf7R')",
+"Wait(1000)",
+"MerlinPlay('GestureLeft')",
+"Write('Your opponent protects e5 but forgets f7, so it is easy for you to mate him.')",
+"Speak('Your opponent protects e5 but forgets f7, so it is easy for you to mate him.')",
+"Wait(4000)",
+"MerlinPlay('Suggest')",
+"Wait(2000)",
+"Write('Now click on the board to mate him!')",
+"Speak('Now click on the board to mate him!')",
+"MerlinPlay('Think')",
+"AllowRecording(true)",
+"Pause(1)",
+"AllowRecording(false)",
+"Wait(2000)",
+"Write('I hope you enjoyed this lesson. Goodbye!')",
+"Speak('I hope you enjoyed this lesson.')",
+"MerlinPlay('Wave')",
+"Speak('Goodbye!')",
+"HideMerlin()"
+);
+
+var CurAction=-1;
+var TimeToWait=0;
+var IsPause=0;
+var IsStopped=0;
+
+function NextAction()
+{ if (IsPause==0)
+  { if(TimeToWait>0 ) TimeToWait-=100;
+    else if (IsStopped==0)
+    { if (CurAction<ActionList.length-1) eval(ActionList[++CurAction]);
+    }
+  }
+  setTimeout("NextAction()",100);
+}
+
+function Wait(nn){ TimeToWait=parseInt(nn); }
+function Pause(nn){ IsPause=nn; }
+function Stop(){ IsStopped=1; }
+function Play()
+{ IsStopped=0; 
+  if (CurAction==ActionList.length-1)
+  { Write(" ");
+    Init('');
+    ShowMerlin(); 
+    CurAction=-1;
+  }
+}
+function Write(tt)
+{ if (document.getElementById) 
+    document.getElementById('Msg').innerHTML=tt;
+}
+function UserMove(isTextMove, MoveText)
+{ if(isTextMove)
+  { MerlinPlay("Congratulate");
+    Write("Congratulations, you made the correct move!");
+    Speak("Congratulations, you made the correct move!"); 
+    Pause(0);
+    Wait(4000);
+  }
+  else 
+  { MoveBack(1);
+    MerlinPlay("Decline");
+    Write("Sorry, this is not the correct move.");
+    Speak("Sorry, this is not the correct move."); 
+  }
+}
+MerlinPit(150);//adjust Merlin's Voice
+MerlinSpd(150);//adjust Merlin's Voice
+setTimeout("NextAction()",100);
+</script>
+
+</BODY>
+</HTML>

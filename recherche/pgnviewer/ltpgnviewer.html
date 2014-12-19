@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<META NAME="description" content="LT-PGN-VIEWER 3.4 is a free JavaScript PGN Viewer ">
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-PGN-VIEWER 3.4</TITLE>
+</HEAD>
+<script language="JavaScript">
+var FileName="blank.html";
+var colwidth=314;
+var size=32;
+function GetUrlString()
+{ var ii, jj, aa, nn, ss, bb=0, uurl = window.location.search;
+  if (uurl != "")
+  { uurl = uurl.substring(1, uurl.length);
+    if (uurl.indexOf("SetBorder=")>=0) bb=18;
+    var llist = uurl.split("&");
+    uurl="";
+    for (ii=0; ii<llist.length; ii++)
+    { if (llist[ii].search("=")>0) uurl+="&"+llist[ii];
+      else FileName=llist[ii];
+      if (llist[ii].search("SetImagePath=")==0)
+      { nn=0; ss=0;
+        for (jj=13; jj<llist[ii].length; jj++)
+        { if (isNaN(llist[ii].charAt(jj))) nn=0;
+          else { nn*=10; nn+=parseInt(llist[ii].charAt(jj)); ss=nn; }
+        }
+        colwidth=8*(ss+1)+42+bb;
+        size=ss;
+      }
+    }
+    uurl=uurl.substring(1, uurl.length);
+    if (uurl!="") return("?"+uurl);
+  }
+  return("");
+}
+function ChangeColWidth(dd)
+{ var cc=colwidth+dd*size-dd;
+  if (document.getElementById) document.getElementById('fs').setAttribute('cols',cc+',*');
+}
+var urlstr=GetUrlString();
+document.open();
+document.writeln("<FRAMESET id='fs' cols=\""+colwidth+",*\" border=1 frameborder=1 framespacing=1>");
+document.writeln('<frame src=\"ltpgnboard.html'+urlstr+'\" name=\"board\" scrolling=no>');
+document.writeln('<frame src=\"'+unescape(FileName)+'\" name=\"text\" scrolling=auto>');
+document.writeln("</FRAMESET>");
+document.close();
+</script>
+</HTML>

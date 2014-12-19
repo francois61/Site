@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<META NAME="description" content="LT-PGN-VIEWER 3.4 is a free JavaScript PGN Viewer ">
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-PGN-BOARD</TITLE>
+<script language="JavaScript" src="ltpgnviewer.js"></script>
+<script language="JavaScript" src="problemboard.js"></script>
+<link rel=stylesheet type="text/css" href="ltpgnviewer.css" />
+</HEAD>
+<BODY bgcolor="#EEEEEE" leftmargin=5 topmargin=5>
+<script language="JavaScript">
+document.writeln("<table border=0><tr><td><FORM name=BoardForm><table border=0><tr><td>");
+EvalUrlString("SetBGColor");
+if ((BGColor!="")&&(document.getElementsByTagName)) document.getElementsByTagName('BODY')[0].style.backgroundColor=BGColor;
+EvalUrlString("SetImagePath");
+if (ImagePath!="") SetBorder(0);
+EvalUrlString("SetBorder");
+EvalUrlString("SetBorderColor");
+WriteBoard(0);
+WriteButtons();
+WritePosition();
+WriteHintButtons();
+document.writeln("</td></tr></table></FORM><div id='gameText'>");
+Init('');
+EvalUrlString();
+document.writeln("</div></td></tr></table>");
+setTimeout("RefreshBoard(true)",1000);
+ShowLabels(true);
+AllowRecording(true);
+AllowNullMove(false);
+ExecCommand(false);
+</script>
+</BODY>
+</HTML>

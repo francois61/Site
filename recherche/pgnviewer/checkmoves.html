@@ -1,0 +1,29 @@
+<html>
+<head>
+<script language="Javascript" src="ltpgnviewer.js"></script>
+</head>
+<body>
+<form>
+<textarea name="pgnmovetext" rows=13 cols=35 wrap=virtual></textarea>
+<input type=button onClick='SubmitForm(this.form)' value='Submit'>
+</form>
+<script language="JavaScript">
+function SubmitForm(ff)
+{ var tt=ff.pgnmovetext.value;
+  var cc=CheckMoves(tt);
+  if (cc==0) alert("No valid moves!");
+  if (cc>0) alert("Move "+cc+" is not a valid move!");
+  //if (cc<0) ff.submit();
+}
+
+function CheckMoves(tt)
+{ Init('');
+  SetPgnMoveText(tt);
+  MoveForward(1000);
+  if (MoveCount==0) return(0);
+  if (tt.indexOf(Math.floor(MoveCount/2+1)+".")>0) return(Math.floor(MoveCount/2+1));
+  return(-1);
+}
+</script>
+</body>
+</html>

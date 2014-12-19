@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<META NAME="author" content="Lutz Tautenhahn">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>LT-SAN-CONVERTER</TITLE>
+<script language="JavaScript" src="ltpgnviewer.js"></script>
+<style type='text/css'>
+td {font-size:10pt; font-family:Verdana;}
+</style>
+<script language="JavaScript">
+var PieceName = "KQRBNP";
+var ShowPieceName = "KDTLSB";
+function OKClick()
+{ PieceName = document.forms[0].SAN.value;
+  ShowPieceName = document.forms[0].NewSAN.value;
+  var ii, jj, kk, ll, dd="", ppgnText, ggameText="", ssanText=PieceName;
+  var ss=document.forms[0].pgnfile.value;
+  if (ss=="") return;
+  ss = ss.split("[");
+  if (ss.length<2) return;
+  var tt=new Array(ss.length-1);
+  for (ii=1; ii<ss.length; ii++) tt[ii-1]=ss[ii].split("]");
+  for (ii=0; ii<tt.length; ii++)
+  { if (tt[ii][0].substr(0,4)=="SAN ")
+    { ssanText=tt[ii][0].substr(4,tt[ii][0].length);
+      tt[ii][1]=tt[ii][1].replace(String.fromCharCode(10),"").replace(String.fromCharCode(13),"");
+    }
+    else
+      ggameText+="["+tt[ii][0]+"]";
+    kk=0;    
+    while ((kk<tt[ii][1].length)&&(tt[ii][1].charCodeAt(kk)<49)) kk++; 
+    if (kk==tt[ii][1].length) ggameText+=tt[ii][1];
+    else
+    { dd+=ggameText;
+      if (ShowPieceName!="KQRBNP")
+        dd+='\n[SAN "'+ShowPieceName+'"]'
+      ssanText=PieceName;
+      ggameText="";      
+      ppgnText=tt[ii][1].substr(0,tt[ii][1].length);
+      ppgnText=ppgnText.split("{");
+      if (ppgnText.length<2)
+        dd+=TransformSAN(ppgnText[0],ssanText,ShowPieceName);
+      else
+      { ll=new Array(ppgnText.length-1);
+        for (jj=1; jj<ppgnText.length; jj++) ll[jj-1]=ppgnText[jj].split("}");
+        dd+=TransformSAN(ppgnText[0],ssanText,ShowPieceName);
+        for (jj=1; jj<ppgnText.length; jj++) dd+="{"+ll[jj-1][0]+"}"+TransformSAN(ll[jj-1][1],ssanText,ShowPieceName);
+      }
+    }
+  }
+  document.forms[0].pgnfile.value=dd;
+}
+function TransformSAN(ss,oo,nn)
+{ if (ss=="") return("");
+  if ((nn=="")||(oo==nn)) return(ss);
+  var jj, rr, tt="";
+  for (jj=0; jj<ss.length; jj++)
+  { rr=oo.indexOf(ss.charAt(jj));
+    if (rr>=0) tt+=nn.charAt(rr);
+    else tt+=ss.charAt(jj);
+  }
+  return(tt);
+}
+</script>
+</HEAD>
+<BODY topmargin=5 leftmargin=5 rightmargin=5 bottommargin=5>
+<div align=center>
+<form>
+<table border=0><tr>
+<td>input SAN: <input type=text name="SAN" value="KQRBNP" size=7></td>
+<td>output SAN: <input type=text name="NewSAN" value="KQRBNP" size=7></td>
+</tr><tr>
+<td colspan=2>Copy your pgn file into the text area below:</td>
+</tr></table>
+<textarea name="pgnfile" rows=24 cols=72 wrap=virtual></textarea>
+<br>
+<input type=button value="Convert SAN" onClick="OKClick()">
+</form>
+</div>
+</BODY>
+</HTML>
